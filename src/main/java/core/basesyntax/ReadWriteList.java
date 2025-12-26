@@ -19,18 +19,18 @@ public class ReadWriteList<E> {
     }
 
     public E get(int index) {
-        if (list.size() > index) {
-            lock.readLock().lock();
-            try {
+        lock.readLock().lock();
+        try {
+            if (list.size() > index) {
                 return list.get(index);
-            } finally {
-                lock.readLock().unlock();
             }
+        } finally {
+            lock.readLock().unlock();
         }
         return null;
     }
 
-    public synchronized int size() {
+    public int size() {
         return list.size();
     }
 }
